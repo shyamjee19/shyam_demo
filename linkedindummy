@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Details Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+        input {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Enter Person Details</h2>
+    <form id="personForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <button type="button" onclick="addPerson()">Submit</button>
+    </form>
+    
+    <h2>Person Details Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Post Text</th>
+                <th>Created Date</th>
+                <th>Likes</th>
+                <th>Replies</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody id="postsTableBody">
+        </tbody>
+    </table>
+
+    <script>
+        function addPerson() {
+            const nameInput = document.getElementById("name");
+            const name = nameInput.value.trim();
+            if (name === "") {
+                alert("Please enter a name.");
+                return;
+            }
+
+            const tableBody = document.getElementById("postsTableBody");
+            const rowCount = tableBody.rows.length + 1;
+            const date = new Date().toLocaleString();
+            const likes = Math.floor(Math.random() * 500);
+            const replies = Math.floor(Math.random() * 100);
+
+            const row = tableBody.insertRow();
+            row.innerHTML = `
+                <td>${rowCount}</td>
+                <td>${name} posted something</td>
+                <td>${date}</td>
+                <td>${likes}</td>
+                <td>${replies}</td>
+                <td><img src="https://via.placeholder.com/100" width="100"></td>
+            `;
+
+            nameInput.value = "";
+        }
+
+        window.onload = function() {
+            const postsTableBody = document.getElementById("postsTableBody");
+            const dummyPosts = [
+                { number: 1, post_text: "Excited to share my latest project update!", created_date: "2024-02-18 10:30AM", likes: 120, replies: 15, images_link: "https://via.placeholder.com/100" },
+                { number: 2, post_text: "Networking is key! Who else agrees? 🚀", created_date: "2024-02-17 05:15PM", likes: 300, replies: 45, images_link: "https://via.placeholder.com/100" },
+                { number: 3, post_text: "AI is transforming the world! Thoughts?", created_date: "2024-02-16 02:50PM", likes: 500, replies: 80, images_link: "https://via.placeholder.com/100" },
+                { number: 4, post_text: "Happy to announce my new role at XYZ Inc.!", created_date: "2024-02-15 09:00AM", likes: 1000, replies: 150, images_link: "https://via.placeholder.com/100" },
+                { number: 5, post_text: "Job alert! We're hiring software engineers", created_date: "2024-02-14 11:45AM", likes: 200, replies: 25, images_link: "https://via.placeholder.com/100" }
+            ];
+            dummyPosts.forEach(post => {
+                const row = postsTableBody.insertRow();
+                row.innerHTML = `
+                    <td>${post.number}</td>
+                    <td>${post.post_text}</td>
+                    <td>${post.created_date}</td>
+                    <td>${post.likes}</td>
+                    <td>${post.replies}</td>
+                    <td><img src="${post.images_link}" width="100"></td>
+                `;
+            });
+        };
+    </script>
+</body>
+</html>
